@@ -64,6 +64,7 @@ public struct LearnMoreView: View {
                     showingMoreInfo.toggle()
                 }
             }
+            .hoverEffect(withAnimation{.automatic}) //Hover Effect
         }
     }
 }
