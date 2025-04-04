@@ -71,7 +71,8 @@ struct ImmersiveView: View {
                         description: attachment.description,
                         position: attachment.position,
                         rotation: attachment.rotation,
-                        imageNames: attachment.imageNames
+                        imageNames: attachment.imageNames,
+                        videoName: attachment.videoName
                     )
                 }
             }
@@ -112,6 +113,8 @@ struct AttachmentInfo {
     let position: SIMD3<Float>
     let rotation: simd_quatf
     let imageNames: [String]
+    
+    let videoName: String?
 }
 
 /// Retrieves the attachment configurations for each environment.
@@ -125,7 +128,8 @@ func getAttachmentIDs(for environment: String) -> [AttachmentInfo] {
                 description: "A serene space designed for focused learning and deep work.",
                 position: SIMD3<Float>(0.0, 1.5, 2.5),
                 rotation: simd_quatf(angle: .pi / 1, axis: SIMD3<Float>(0, 1, 0)),
-                imageNames: ["Hivestudy"]
+                imageNames: ["Hivestudy"],
+                videoName: "null"
             ),
             AttachmentInfo(
                 id: "hiveInfo",
@@ -133,7 +137,8 @@ func getAttachmentIDs(for environment: String) -> [AttachmentInfo] {
                 description: "A dynamic co-working space fostering collaboration and creativity.",
                 position: SIMD3<Float>(1.0, 1.5, -1.0),
                 rotation: simd_quatf(angle: .pi / 180, axis: SIMD3<Float>(0, 1, 0)),
-                imageNames: ["Hive"]
+                imageNames: ["Hive"],
+                videoName: "null"
             )
         ]
     case "FypLabScene":
@@ -144,7 +149,8 @@ func getAttachmentIDs(for environment: String) -> [AttachmentInfo] {
                 description: "A virtual reality project for safe riding. This project leverages VR to teach road safety to cyclists, in a bid to counter the rise in accidents involving cyclists. The VR experience allows cyclists to practise safe riding behaviour in an immersive, yet safe and controlled environment.",
                 position: SIMD3<Float>(0.0, 0.5, 0.0),
                 rotation: simd_quatf(angle: .pi * 3 / 4, axis: SIMD3<Float>(0, 1, 0)),
-                imageNames: ["Bicycle"]
+                imageNames: ["Bicycle"],
+                videoName: "null"
             ),
             AttachmentInfo(
                 id: "robotInfo",
@@ -152,7 +158,8 @@ func getAttachmentIDs(for environment: String) -> [AttachmentInfo] {
                 description: "Let out intelligent tour robot, Passion, bring you through a technological journey co-created with our industry partners. The tour is organised into 8 technology sectors, each featuring a collection of interactive projects developed by our students and staff.",
                 position: SIMD3<Float>(-0.8, 0.8, -2.5),
                 rotation: simd_quatf(angle: .pi / 4, axis: SIMD3<Float>(0, 1, 0)),
-                imageNames: ["Robot"]
+                imageNames: ["Robot"],
+                videoName: "null"
             ),
             AttachmentInfo(
                 id: "tvInfo",
@@ -160,7 +167,8 @@ func getAttachmentIDs(for environment: String) -> [AttachmentInfo] {
                 description: "A VR application for RBS70 - a man-portable air defense system designed for anti-aircraft warfare. Trade and public visitors experienced a simulation of the weapon developed by SIT students during Singapore Airshow 2018. The application features friend or foe target identification and visual cues for firing of the missile.",
                 position: SIMD3<Float>(-1.5, 1.5, -0.5),
                 rotation: simd_quatf(angle: .pi * 3 / 4, axis: SIMD3<Float>(0, 1, 0)),
-                imageNames: ["TV"]
+                imageNames: ["TV"],
+                videoName: "Hummingbirds"
             )
         ]
     default:
