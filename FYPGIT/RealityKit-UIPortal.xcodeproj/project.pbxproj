@@ -18,6 +18,7 @@
 		37CC49262D267653000200E5 /* FypLabScene.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 37CC49252D267653000200E5 /* FypLabScene.usdz */; };
 		D77367C92CFFC566008A4DEF /* ToggleImmersiveSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77367C82CFFC561008A4DEF /* ToggleImmersiveSpace.swift */; };
 		D77367CB2CFFC7F4008A4DEF /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77367CA2CFFC7F1008A4DEF /* AppModel.swift */; };
+		DD1DBA002DB107BF00048E24 /* OpenedVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1DB9FF2DB107BF00048E24 /* OpenedVideoView.swift */; };
 		DDAACFAA2D9FADCE00DB922D /* Hummingbirds.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = DDAACFA92D9FADCE00DB922D /* Hummingbirds.mp4 */; };
 		F5B0C9D72CA6072F00F43208 /* EntryPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B0C9D62CA6072F00F43208 /* EntryPoint.swift */; };
 		F5B0C9D92CA6072F00F43208 /* UIPortalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B0C9D82CA6072F00F43208 /* UIPortalView.swift */; };
@@ -40,6 +41,7 @@
 		9C95980A87CB4208DCF29E22 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		D77367C82CFFC561008A4DEF /* ToggleImmersiveSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleImmersiveSpace.swift; sourceTree = "<group>"; };
 		D77367CA2CFFC7F1008A4DEF /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		DD1DB9FF2DB107BF00048E24 /* OpenedVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenedVideoView.swift; sourceTree = "<group>"; };
 		DDAACFA92D9FADCE00DB922D /* Hummingbirds.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Hummingbirds.mp4; sourceTree = "<group>"; };
 		E6E79D11A9F18B24CB7B3ACA /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = ../Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		F5B0C9CF2CA6072F00F43208 /* RealityKit-UIPortal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RealityKit-UIPortal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				37C57B1F2D424B6E007D73C8 /* AttachmentsProvider.swift */,
+				DD1DB9FF2DB107BF00048E24 /* OpenedVideoView.swift */,
 				37C57B172D42034A007D73C8 /* LearnMoreView.swift */,
 				373A80CF2D227E9E00438A6C /* DropdownMenu.swift */,
 				3726D95F2D1E77BC0038D0B1 /* ContentView.swift */,
@@ -227,6 +230,7 @@
 				F5B0C9D92CA6072F00F43208 /* UIPortalView.swift in Sources */,
 				D77367CB2CFFC7F4008A4DEF /* AppModel.swift in Sources */,
 				3726D9602D1E77BC0038D0B1 /* ContentView.swift in Sources */,
+				DD1DBA002DB107BF00048E24 /* OpenedVideoView.swift in Sources */,
 				D77367C92CFFC566008A4DEF /* ToggleImmersiveSpace.swift in Sources */,
 				F5B0CA612CA618B200F43208 /* ImmersiveView.swift in Sources */,
 				373A80D42D22A4E300438A6C /* Areas.swift in Sources */,

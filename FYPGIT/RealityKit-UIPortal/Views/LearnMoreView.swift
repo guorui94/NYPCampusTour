@@ -17,6 +17,8 @@ public struct LearnMoreView: View {
     @State private var isExpanded = false
     @State private var player: AVPlayer? // Video playing
     
+    @State private var isShowingVideoOverlay = false
+    
     private var imagesFrame: Double {
         showingMoreInfo ? 326 : 50
     }
@@ -36,19 +38,20 @@ public struct LearnMoreView: View {
     }
 
     public var body: some View {
-        VStack {
-            ZStack(alignment: .center) {
-                if !showingMoreInfo {
-                    Text(name)
-                        .matchedGeometryEffect(id: "Name", in: animation)
-                        .font(titleFont)
-                        .padding()
-                }
-                
-                if showingMoreInfo {
-                    VStack(
-                        //alignment: .leading,
-                        spacing: 10)
+        ZStack {
+            VStack {
+                ZStack(alignment: .center) {
+                    if !showingMoreInfo {
+                        Text(name)
+                            .matchedGeometryEffect(id: "Name", in: animation)
+                            .font(titleFont)
+                            .padding()
+                    }
+                    
+                    if showingMoreInfo {
+                        VStack(
+                            //alignment: .leading,
+                            spacing: 10)
                         {
                             VStack{
                                 Text(name)
@@ -61,71 +64,92 @@ public struct LearnMoreView: View {
                                     .fixedSize(horizontal: false, vertical: true) // Prevents text from forcing view to expand
                                     .padding(10)
                             }
-                            .offset(y: isExpanded ? -100: 0)
+                            .offset(y: isExpanded ? -80: 0)
                             .animation(.easeInOut(duration: 0.2), value: isExpanded)
                             
-                        VStack{
-                            if let url = videoURL {
-                                VideoPlayer(player: player)
-                                    .frame(
-                                        alignment: .center)
-                                    .scaleEffect(isExpanded ? 1.2 : 1)
-                                    .aspectRatio(contentMode: .fit)
-                                    .onAppear{
-                                        player = AVPlayer(url: url)
-                                        player?.actionAtItemEnd = .none
+                            VStack{
+                                if let url = videoURL {
+                                    
+                                    VideoPlayer(player: player)
+                                        .frame(
+                                            alignment: .center)
+                                        .scaleEffect(isExpanded ? 1.2 : 1)
+                                        .aspectRatio(contentMode: .fit)
+                                        .onAppear{
+                                            player = AVPlayer(url: url)
+                                            player?.actionAtItemEnd = .none
+                                        }
+                                        .scaledToFit()
+                                    HStack{
+                                        Button("New Window"){
+
+                                            isShowingVideoOverlay = true
+                                        }.padding(10)
+                                        
+                                        Button(
+                                            action:{
+                                                withAnimation{isExpanded.toggle()}
+                                            }
+                                        ){
+                                            Image(systemName: isExpanded ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
+                                                .padding()
+                                                .background(Color.white.opacity(0.7))
+                                                .clipShape(Circle())
+                                        }
+                                        .padding(10)
                                     }
-                                    .scaledToFit()
-                            }
-                            else if !imageNames.isEmpty {
+                                }
+                                else if !imageNames.isEmpty {
                                     Spacer()
                                         .frame(height: 10)
                                     
-                                ImagesView(imageNames: imageNames, isExpanded: isExpanded )
+                                    ImagesView(imageNames: imageNames, isExpanded: isExpanded )
                                         .padding(.bottom, 10)
                                     //Additional Add ons to expand
                                         .onTapGesture {
                                             withAnimation{
                                             }
                                         }
-                                        .scaleEffect(isExpanded ? 1.2 : 1)
                                         .frame(
                                             alignment: .center
                                         )
                                         .clipped()
-                                        .frame(height: isExpanded ? 1200 : 1000)
+                                }
                             }
                         }
-                        Button(
-                            action:{
-                                withAnimation{isExpanded.toggle()}
-                            }
-                        ){
-                            Image(systemName: isExpanded ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
-                                .padding()
-                                .background(Color.white.opacity(0.7))
-                                .clipShape(Circle())
-                        }
-                        .padding(10)
+                        .padding()
+                        .frame(width: 750)
                     }
-                    .padding()
-                    .frame(width: 750)
                 }
-            }
-            .frame(
-                maxWidth: 800
-            )
-            .padding(24)
-            .background(Color.red)
-            .glassBackgroundEffect()
-            .onTapGesture {
-                withAnimation(.spring) {
-                    showingMoreInfo.toggle()
+                .frame(
+                    maxWidth: 800
+                )
+                .padding(24)
+                .background(Color.red)
+                .glassBackgroundEffect()
+                .onTapGesture {
+                    withAnimation(.spring) {
+                        showingMoreInfo.toggle()
+                    }
                 }
+                .hoverEffect(
+                    withAnimation{.automatic}
+                ) //Hovering
             }
-            .hoverEffect(
-                withAnimation{.automatic}
-            ) //Hovering
+        }
+        if isShowingVideoOverlay {
+           VStack{
+                OpenedVideoView(
+                    videoName: videoName, dismissAction:{isShowingVideoOverlay = false}
+                )
+                .frame(width: 800, height: 900)
+                .cornerRadius(20)
+                .shadow(radius: 20)
+                .transition(.scale)
+            }
+            .ignoresSafeArea()
+            .cornerRadius(20)
+
         }
     }
 }
