@@ -39,6 +39,7 @@ public struct LearnMoreView: View {
     private var videoURL: URL? {
         guard let videoFileName = videoName else {return nil}
         return Bundle.main.url(forResource: videoFileName, withExtension: ".mp4")
+        
     }
 
     public var body: some View {
