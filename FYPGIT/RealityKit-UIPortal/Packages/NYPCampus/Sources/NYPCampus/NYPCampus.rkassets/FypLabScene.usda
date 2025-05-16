@@ -1,0 +1,81 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 2.0 (448.0.16.0.3)"
+    }
+    defaultPrim = "FypLabScene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "FypLabScene"
+{
+    reorder nameChildren = ["poi_Bicycle", "poi_TV", "poi_Robot", "FypLabScene"]
+    def Xform "poi_Bicycle" (
+        active = true
+    )
+    {
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1.5300531, 1.5300531, 1.5300531)
+        float3 xformOp:translate = (-1.1656055, 1.0819768, -0.27442718)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"
+        {
+            string description = "A virtual reality project for safe riding. This project leverages VR to teach road safety to cyclists, in a bid to counter the rise in accidents involving cyclists. The VR experience allows cyclists to practise safe riding behaviour in an immersive, yet safe and controlled environment."
+            string id = "bicycleInfo"
+            string imageNames = '["Bicycle"]'
+            uniform token info:id = "NYPCampus.PointOfInterestComponent"
+            string name = "Safe Riding Bike"
+            string videoName = "null"
+        }
+    }
+
+    def Xform "poi_TV" (
+        active = true
+    )
+    {
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (6.79797, 6.79797, 6.79797)
+        float3 xformOp:translate = (-0.3523686, 1.2675906, -2.282813)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"
+        {
+            string description = "Let out intelligent tour robot, Passion, bring you through a technological journey co-created with our industry partners. The tour is organised into 8 technology sectors, each featuring a collection of interactive projects developed by our students and staff."
+            string id = "robotInfo"
+            string imageNames = '["Robot"]'
+            uniform token info:id = "NYPCampus.PointOfInterestComponent"
+            string name = "Intelligent Guided Tour Robot"
+            string videoName = "null"
+        }
+    }
+
+    def Xform "poi_Robot" (
+        active = true
+    )
+    {
+        float3 xformOp:translate = (1.8230503, 0.7823772, -0.9991894)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"
+        {
+            string description = "A VR application for RBS70 - a man-portable air defense system designed for anti-aircraft warfare. Trade and public visitors experienced a simulation of the weapon developed by SIT students during Singapore Airshow 2018. The application features friend or foe target identification and visual cues for firing of the missile."
+            string id = "tvInfo"
+            string imageNames = '["TV"]'
+            uniform token info:id = "NYPCampus.PointOfInterestComponent"
+            string name = "Immersive Technology Project"
+            string videoName = "Hummingbirds"
+        }
+    }
+
+    def "FypLabScene" (
+        active = true
+        references = @Resources/FypLabScene.usdz@
+    )
+    {
+        float3 xformOp:scale = (1, 1, 1)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+}
+
