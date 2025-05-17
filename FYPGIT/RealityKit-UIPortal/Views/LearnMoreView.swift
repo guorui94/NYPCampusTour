@@ -5,8 +5,8 @@ import AVKit
 public struct LearnMoreView: View {
     let name: String
     let description: String
-    let position: SIMD3<Float>
-    let rotation: simd_quatf
+    //let position: SIMD3<Float>
+    //let rotation: simd_quatf
     let imageNames: [String]
     
     let videoName: String? //For video access
@@ -204,8 +204,8 @@ struct ImagesView: View {
             LearnMoreView(
                 name: "TV",
                 description: "It's a TV",
-                position: SIMD3<Float>(1.0, 1.5, 0.0),
-                rotation: simd_quatf(angle: .pi / 4, axis: SIMD3<Float>(0, 1, 0)),
+                //position: SIMD3<Float>(1.0, 1.5, 0.0),
+                //rotation: simd_quatf(angle: .pi / 4, axis: SIMD3<Float>(0, 1, 0)),
                 imageNames: ["Bicycle"],
                 videoName: "Hummingbirds"
             )

@@ -6,11 +6,15 @@ The app's main entry point.
 */
 
 import SwiftUI
+import NYPCampus
 
 @main
 struct EntryPoint: App {
     @State private var appModel = AppModel()
     
+    init() {
+        NYPCampus.PointOfInterestComponent.registerComponent()
+    }
 
     var body: some Scene {
         WindowGroup {

@@ -4,6 +4,7 @@ public enum Location: String, Codable, CaseIterable {
     case Hive
     case FypLabScene
 }
+
 // Ensure you register this component in your app’s delegate using:
 // PointOfInterestComponent.registerComponent()
 public struct PointOfInterestComponent: Component, Codable {
