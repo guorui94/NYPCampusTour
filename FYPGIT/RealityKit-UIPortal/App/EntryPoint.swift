@@ -6,19 +6,41 @@ The app's main entry point.
 */
 
 import SwiftUI
+import NYPCampus
 
 @main
 struct EntryPoint: App {
     @State private var appModel = AppModel()
+    
+    init() {
+        NYPCampus.PointOfInterestComponent.registerComponent()
+    }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(appModel)
+
         }
         .windowResizability(.contentSize)
-
-        // Defines an immersive space as a part of the scene. 
+        
+        WindowGroup(id: "OpenedVideo"){
+            ZStack{
+                OpenedVideoView(videoName: appModel.selectedvideoName){
+                    print("Dismissing Second window")
+                    appModel.selectedvideoName = nil
+                }
+                .onAppear{
+                    print("OpenedVideo window with: ", appModel.selectedvideoName ?? "nil")
+                }
+            }
+            
+            .environment(appModel)
+            
+        }
+        .defaultSize(width: 820, height: 900)
+        
+        // Defines an immersive space as a part of the scene.
         ImmersiveSpace(id: appModel.immersiveSpaceID) {
             ImmersiveView().environment(appModel)
                 .onAppear {
@@ -29,5 +51,7 @@ struct EntryPoint: App {
                 }
         }
         .immersionStyle(selection: .constant(.full), in: .full)
+        
+
     }
 }
