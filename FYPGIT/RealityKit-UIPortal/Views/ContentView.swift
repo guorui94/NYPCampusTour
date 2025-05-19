@@ -34,9 +34,6 @@ struct ContentView: View {
                         .padding(.top, 30)
                 }
                 .padding()
-                
-                
-                
                 // Iterate over each block to create a dropdown menu
                 ScrollView(.vertical) {
                     ForEach(blocks) { block in
@@ -62,17 +59,13 @@ struct ContentView: View {
             //.navigationTitle("Areas")
         }
         detail: {
-
             if let selectedArea {
                 // Use `selectedArea` as a dependency to refresh the view
                 UIPortalView(modelName: selectedArea.modelName)
                     .environment(appModel)
                     .id(selectedArea.id) // Add a unique ID to force refresh
             } else {
-                Text("Welcome to the NYP campus app.")
-                    .bold()
-                    .padding(.bottom, 10)
-                Text("Select an area in the dropdown menu to begin your journey.")
+                Text("Select an area.")
             }
         }
         .frame(minWidth: 700, minHeight: 700)

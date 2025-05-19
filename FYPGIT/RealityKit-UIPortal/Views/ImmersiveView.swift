@@ -8,124 +8,74 @@ The app's immersive view.
 import SwiftUI
 import RealityKit
 import AVFoundation
-import NYPCampus
 
 /// An immersive view that contains the box environment.
 struct ImmersiveView: View {
     @Environment(AppModel.self) private var appModel
     
-    static let markersQuery = EntityQuery(where: .has(PointOfInterestComponent.self))
-    static let runtimeQuery = EntityQuery(where: .has(PointOfInterestRuntimeComponent.self))
-    
-    @State private var subscriptions = [EventSubscription]()
-    @State private var attachmentsProvider = AttachmentsProvider()
-    
     @State private var player: AVAudioPlayer?
     //@State private var audioController: AudioPlaybackController?
     
-    // The average human height in meters.
+    /// The average human height in meters.
     let avgHeight: Float = 0
-    let root = Entity()
 
     var body: some View {
-        
         RealityView { content, attachments in
+            // Create the box environment on the root entity.
+            let root = Entity()
+            let rotation = simd_quatf(angle: .pi / 2, axis: SIMD3<Float>(0, 1, 0))
+            root.transform.rotation = rotation
+
+            // Set the y-axis position to the average human height.
+            root.position.y += avgHeight
+
+            // Load the environment using the selected model name.
             do {
-                // Create the box environment on the root entity.
-                
-                // let rotation = simd_quatf(angle: .pi / 2, axis: SIMD3<Float>(0, 1, 0))
-                // root.transform.rotation = rotation
-                // Set the y-axis position to the average human height.
-                // root.position.y += avgHeight
-                // Reposition the root so it has a similar placement
-                // as when someone views it from the portal.
-                // root.position.z -= 1.0
-                
-                // Load the environment using the selected model name.
                 try await createEnvironment(on: root, modelName: appModel.selectedModelName)
-                content.add(root)
-                
-                subscriptions.append(content.subscribe(to: ComponentEvents.DidAdd.self, componentType: PointOfInterestComponent.self, { event in
-                    createLearnMoreView(for: event.entity)
-                }))
-                
-                playSound(for: appModel.selectedModelName)
-                
             } catch {
                 print("Failed to load environment: \(error.localizedDescription)")
             }
-            
-        } update: { content, attachments in
-            
-            root.scene?.performQuery(Self.runtimeQuery).forEach { entity in
-                
-                guard let component = entity.components[PointOfInterestRuntimeComponent.self] else { return }
-                
-                // Get the entity from the collection of attachments keyed by tag.
-                guard let attachmentEntity = attachments.entity(for: component.attachmentTag) else { return }
-                
-                guard attachmentEntity.parent == nil else { return }
-                
-                // SwiftUI calculates an attachment view's expanded size using the top center as the pivot point. This
-                // raises the views so they aren't sunk into the terrain in their initial collapsed state.
-                entity.addChild(attachmentEntity)
-                attachmentEntity.setPosition([0.0, 0.4, 0.0], relativeTo: entity)
-                content.add(entity)
-                
-            }
-        
-        } attachments: {
-            
-            ForEach(attachmentsProvider.sortedTagViewPairs, id: \.tag) { pair in
-                Attachment(id: pair.tag) {
-                    pair.view
+
+            content.add(root)
+
+            // Load attachment entities dynamically
+            for attachmentID in getAttachmentIDs(for: appModel.selectedModelName) {
+                if let entity = attachments.entity(for: attachmentID.id) {
+                    entity.position = attachmentID.position
+                    entity.orientation = attachmentID.rotation
+                    content.add(entity)
                 }
             }
+
+            // Reposition the root so it has a similar placement
+            // as when someone views it from the portal.
+            root.position.z -= 1.0
             
-//            ForEach(getAttachmentIDs(for: appModel.selectedModelName), id: \.id) { attachment in
-//                Attachment(id: attachment.id) {
-//                    LearnMoreView(
-//                        name: attachment.name,
-//                        description: attachment.description,
-//                        position: attachment.position,
-//                        rotation: attachment.rotation,
-//                        imageNames: attachment.imageNames,
-//                        videoName: attachment.videoName
-//                    )
-//                }
-//            }
+
+            //            let ambientAudioEntity = entity.findEntity(named: "ChannelAudio")
+            //
+            //            guard let resource = try? await AudioFileResource(named: "Forest_Sounds.wav") else {
+            //                fatalError("Unable to find audio file Forest_Sounds.wav")
+            //            }
+            //
+            //            audioController = ambientAudioEntity?.prepareAudio(resource)
+            //            audioController?.play()
+            //
+            playSound(for: appModel.selectedModelName)
             
+        } attachments: {
+            ForEach(getAttachmentIDs(for: appModel.selectedModelName), id: \.id) { attachment in
+                Attachment(id: attachment.id) {
+                    LearnMoreView(
+                        name: attachment.name,
+                        description: attachment.description,
+                        position: attachment.position,
+                        rotation: attachment.rotation,
+                        imageNames: attachment.imageNames
+                    )
+                }
+            }
         }
-    }
-    
-    private func createLearnMoreView(for entity: Entity) {
-        
-        // If this entity already has a RuntimeComponent, don't add another one.
-        guard entity.components[PointOfInterestRuntimeComponent.self] == nil else { return }
-        
-        // Get this entity's PointOfInterestComponent, which is in the Reality Composer Pro project.
-        guard let pointOfInterest = entity.components[PointOfInterestComponent.self] else { return }
-        
-        let tag: ObjectIdentifier = entity.id
-        let name = LocalizedStringResource(stringLiteral: pointOfInterest.name)
-        let description = LocalizedStringResource(stringLiteral: pointOfInterest.description)
-        let view = LearnMoreView(name: String(localized: name),
-                                 description: String(localized: description),
-                                 imageNames: pointOfInterest.imageNameArray,
-                                 videoName: pointOfInterest.videoName
-        ).tag(tag)
-        
-//        let view = LearnMoreView(name: String(localized: name),
-//                                 description: String(localized: description),
-//                                 imageNames: pointOfInterest.imageNames,
-//                                 trail: trailEntity,
-//                                 viewModel: viewModel)
-//            .tag(tag)
-        
-        entity.components[PointOfInterestRuntimeComponent.self] = PointOfInterestRuntimeComponent(attachmentTag: tag)
-        
-        attachmentsProvider.attachments[tag] = AnyView(view)
-        
     }
     
     @MainActor
@@ -154,18 +104,7 @@ struct ImmersiveView: View {
     }
 }
 
-// Updated createEnvironment function to accept a modelName
-@MainActor
-func createEnvironment(on root: Entity, modelName: String) async throws {
-    // Load the environment root entity asynchronously.
-    //let assetRoot = try await Entity(named: modelName)
-    let assetRoot = try await Entity(named: "FypLabScene", in: NYPCampus.nYPCampusBundle)
-
-    // Add the environment to the root entity.
-    root.addChild(assetRoot)
-}
-
-// A struct to hold attachment details.
+/// A struct to hold attachment details.
 struct AttachmentInfo {
     let id: String
     let name: String
@@ -173,69 +112,63 @@ struct AttachmentInfo {
     let position: SIMD3<Float>
     let rotation: simd_quatf
     let imageNames: [String]
-    let videoName: String?
+}
+
+/// Retrieves the attachment configurations for each environment.
+func getAttachmentIDs(for environment: String) -> [AttachmentInfo] {
+    switch environment {
+    case "HiveScene":
+        return [
+            AttachmentInfo(
+                id: "studyCornerInfo",
+                name: "Study Corner",
+                description: "A serene space designed for focused learning and deep work.",
+                position: SIMD3<Float>(0.0, 1.5, 2.5),
+                rotation: simd_quatf(angle: .pi / 1, axis: SIMD3<Float>(0, 1, 0)),
+                imageNames: ["Hivestudy"]
+            ),
+            AttachmentInfo(
+                id: "hiveInfo",
+                name: "Hive",
+                description: "A dynamic co-working space fostering collaboration and creativity.",
+                position: SIMD3<Float>(1.0, 1.5, -1.0),
+                rotation: simd_quatf(angle: .pi / 180, axis: SIMD3<Float>(0, 1, 0)),
+                imageNames: ["Hive"]
+            )
+        ]
+    case "FypLabScene":
+        return [
+            AttachmentInfo(
+                id: "bicycleInfo",
+                name: "Safe Riding Bike",
+                description: "A virtual reality project for safe riding. This project leverages VR to teach road safety to cyclists, in a bid to counter the rise in accidents involving cyclists. The VR experience allows cyclists to practise safe riding behaviour in an immersive, yet safe and controlled environment.",
+                position: SIMD3<Float>(0.0, 0.5, 0.0),
+                rotation: simd_quatf(angle: .pi * 3 / 4, axis: SIMD3<Float>(0, 1, 0)),
+                imageNames: ["Bicycle"]
+            ),
+            AttachmentInfo(
+                id: "robotInfo",
+                name: "Intelligent Guided Tour Robot",
+                description: "Let out intelligent tour robot, Passion, bring you through a technological journey co-created with our industry partners. The tour is organised into 8 technology sectors, each featuring a collection of interactive projects developed by our students and staff.",
+                position: SIMD3<Float>(-0.8, 0.8, -2.5),
+                rotation: simd_quatf(angle: .pi / 4, axis: SIMD3<Float>(0, 1, 0)),
+                imageNames: ["Robot"]
+            ),
+            AttachmentInfo(
+                id: "tvInfo",
+                name: "Immersive Technology Project",
+                description: "A VR application for RBS70 - a man-portable air defense system designed for anti-aircraft warfare. Trade and public visitors experienced a simulation of the weapon developed by SIT students during Singapore Airshow 2018. The application features friend or foe target identification and visual cues for firing of the missile.",
+                position: SIMD3<Float>(-1.5, 1.5, -0.5),
+                rotation: simd_quatf(angle: .pi * 3 / 4, axis: SIMD3<Float>(0, 1, 0)),
+                imageNames: ["TV"]
+            )
+        ]
+    default:
+        return []
+    }
 }
 
 
-//Retrieves the attachment configurations for each environment.
-//func getAttachmentIDs(for environment: String) -> [AttachmentInfo] {
-//    switch environment {
-//    case "HiveScene":
-//        return [
-//            AttachmentInfo(
-//                id: "studyCornerInfo",
-//                name: "Study Corner",
-//                description: "A serene space designed for focused learning and deep work.",
-//                position: SIMD3<Float>(0.0, 1.5, 2.5),
-//                rotation: simd_quatf(angle: .pi / 1, axis: SIMD3<Float>(0, 1, 0)),
-//                imageNames: ["Hivestudy"],
-//                videoName: "null"
-//            ),
-//            AttachmentInfo(
-//                id: "hiveInfo",
-//                name: "Hive",
-//                description: "A dynamic co-working space fostering collaboration and creativity.",
-//                position: SIMD3<Float>(1.0, 1.5, -1.0),
-//                rotation: simd_quatf(angle: .pi / 180, axis: SIMD3<Float>(0, 1, 0)),
-//                imageNames: ["Hive"],
-//                videoName: "null"
-//            )
-//        ]
-//    case "FypLabScene":
-//        return [
-//            AttachmentInfo(
-//                id: "bicycleInfo",
-//                name: "Safe Riding Bike",
-//                description: "A virtual reality project for safe riding. This project leverages VR to teach road safety to cyclists, in a bid to counter the rise in accidents involving cyclists. The VR experience allows cyclists to practise safe riding behaviour in an immersive, yet safe and controlled environment.",
-//                position: SIMD3<Float>(0.0, 0.5, 0.0),
-//                rotation: simd_quatf(angle: .pi * 3 / 4, axis: SIMD3<Float>(0, 1, 0)),
-//                imageNames: ["Bicycle"],
-//                videoName: "null"
-//            ),
-//            AttachmentInfo(
-//                id: "robotInfo",
-//                name: "Intelligent Guided Tour Robot",
-//                description: "Let out intelligent tour robot, Passion, bring you through a technological journey co-created with our industry partners. The tour is organised into 8 technology sectors, each featuring a collection of interactive projects developed by our students and staff.",
-//                position: SIMD3<Float>(-0.8, 0.8, -2.5),
-//                rotation: simd_quatf(angle: .pi / 4, axis: SIMD3<Float>(0, 1, 0)),
-//                imageNames: ["Robot"],
-//                videoName: "null"
-//            ),
-//            AttachmentInfo(
-//                id: "tvInfo",
-//                name: "Immersive Technology Project",
-//                description: "A VR application for RBS70 - a man-portable air defense system designed for anti-aircraft warfare. Trade and public visitors experienced a simulation of the weapon developed by SIT students during Singapore Airshow 2018. The application features friend or foe target identification and visual cues for firing of the missile.",
-//                position: SIMD3<Float>(-1.5, 1.5, -0.5),
-//                rotation: simd_quatf(angle: .pi * 3 / 4, axis: SIMD3<Float>(0, 1, 0)),
-//                imageNames: ["TV"],
-//                videoName: "Hummingbirds"
-//            )
-//        ]
-//    default:
-//        return []
-//    }
-//}
-//
 //@ViewBuilder
 //func getViewForEnvironment(_ environment: String) -> some View {
 //    switch environment {
@@ -249,7 +182,18 @@ struct AttachmentInfo {
 //        DefaultInfoView() // A fallback view
 //    }
 //}
-//
+
+
+/// Updated createEnvironment function to accept a modelName
+@MainActor
+func createEnvironment(on root: Entity, modelName: String) async throws {
+    // Load the environment root entity asynchronously.
+    let assetRoot = try await Entity(named: modelName)
+
+    // Add the environment to the root entity.
+    root.addChild(assetRoot)
+}
+
 //@MainActor
 //struct DefaultInfoView: View {
 //    var body: some View {
@@ -295,8 +239,9 @@ struct AttachmentInfo {
 //        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12))
 //    }
 //}
-//
-// //Creates buttons specific to the environment and positions them.
+
+
+///// Creates buttons specific to the environment and positions them.
 //@MainActor
 //func createEnvironmentButtons(for environment: String, on parent: Entity) {
 //    // Example configuration for environments
@@ -326,8 +271,7 @@ struct AttachmentInfo {
 //}
 //
 //
-//
-//Creates a forward-facing big red button with a dark metallic holder and a label.
+///// Creates a forward-facing big red button with a dark metallic holder and a label.
 //@MainActor
 //func createButton(label: String) -> Entity {
 //    let buttonEntity = Entity()
@@ -366,3 +310,4 @@ struct AttachmentInfo {
 //
 //    return buttonEntity
 //}
+

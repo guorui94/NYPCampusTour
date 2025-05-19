@@ -5,15 +5,12 @@ Abstract:
 The model to contain app state.
 */
 
-import Foundation
 import SwiftUI
-import Observation
 
 /// Maintains app-wide state
 @MainActor
 @Observable
-class AppModel: ObservableObject {
-    
+class AppModel {
     let immersiveSpaceID = "ImmersiveSpace"
     enum ImmersiveSpaceState {
         case closed
@@ -22,6 +19,4 @@ class AppModel: ObservableObject {
     }
     var immersiveSpaceState = ImmersiveSpaceState.closed
     var selectedModelName: String = ""
-
-    var selectedvideoName: String? = nil
 }

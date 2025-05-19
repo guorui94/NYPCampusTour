@@ -15,7 +15,6 @@ struct DropdownMenu: View {
     var onSelect: (String) -> Void // Callback for selection
     
     @State private var isOpen: Bool = false
-    @State private var selectedOption: String? = nil //Tracting the selected option
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -26,19 +25,14 @@ struct DropdownMenu: View {
                 }
             }) {
                 HStack {
-                    Text(title)
-                        .font(.headline.bold())
-                        .foregroundColor(.white)
-                        .padding(.leading, 10)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
                     Image(systemName: "chevron.right")
                         .rotationEffect(.degrees(isOpen ? 90 : 0))
                         .animation(.easeInOut(duration: 0.4), value: isOpen)
-                        .padding(.trailing, 10)
                     
+                    Text(title)
+                        .font(.headline)
+                        .padding()
                 }
-                .padding()
                 .frame(maxWidth: .infinity)
                 .foregroundColor(.white)
                 .cornerRadius(8)
@@ -50,18 +44,14 @@ struct DropdownMenu: View {
                     ForEach(options, id: \.self) { option in
                         Button(action: {
                             onSelect(option) // Trigger selection callback
-                            
-                            selectedOption = option
-                            isOpen = false
                         }) {
                             Text(option)
                                 .font(.body)
                                 .padding()
                                 .frame(maxWidth: .infinity)
                                 .cornerRadius(5)
-                                
                         }
-                        .background(selectedOption == option ? Color.blue.opacity(0.3) : Color.clear)
+
                     }
                     Divider()
                 }
@@ -70,7 +60,6 @@ struct DropdownMenu: View {
         }
         .cornerRadius(8)
         .padding(.horizontal, 10)
-        
     }
 }
 
