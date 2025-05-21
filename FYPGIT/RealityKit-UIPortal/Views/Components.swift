@@ -1,3 +1,11 @@
+//
+//  Components.swift
+//  RealityKit-UIPortal
+//
+//  Created by Guo Rui on 21/5/25.
+//  Copyright © 2025 Apple. All rights reserved.
+//
+
 /*
 See the LICENSE.txt file for this sample’s licensing information.
 
