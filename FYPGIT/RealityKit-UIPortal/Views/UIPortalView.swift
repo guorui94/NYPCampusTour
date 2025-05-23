@@ -64,7 +64,7 @@ struct UIPortalView: View {
         world.components.set(WorldComponent())
 
         // Create the environment and add it to the world.
-        try await createEnvironment(on: world, modelName: modelName)
+        try await createEnvironment(on: world, modelName: appModel.selectedModelName)
 
         root.addChild(world)
 

@@ -8,19 +8,22 @@ def "HiveScene" (
     references = @Resources/HiveScene.usdz@
 )
 {
-    reorder nameChildren = ["Hive", "poi_Hive", "poi_StudyCorner"]
+    reorder nameChildren = ["Hive", "poi_Hive", "poi_StudyCorner", "poi_Lounges"]
     float3 xformOp:scale = (100, 100, 100)
     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
     def Xform "poi_Hive" (
         active = true
+        customData = {
+            float3 rotationEulerHint = (0, 2.9670594, 0)
+        }
     )
     {
         float2 ui:nodegraph:node:pos = (20, 20)
         int ui:nodegraph:node:stackingOrder = 1
-        quatf xformOp:orient = (1, 0, 0, 0)
-        float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (0.40422624, 1.1424044, 0)
+        quatf xformOp:orient = (0.087155804, 0, 0.9961947, 0)
+        float3 xformOp:scale = (1.1, 1.1, 1.1)
+        float3 xformOp:translate = (-0.32952702, 1.4280014, 1.3433106)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"
@@ -30,20 +33,23 @@ def "HiveScene" (
             string imageNames = "Hive"
             uniform token info:id = "NYPCampus.PointOfInterestComponent"
             token location = "Hive"
-            string name = "poi_Hive"
+            string name = "Hive"
             string videoName = "null"
         }
     }
 
     def Xform "poi_StudyCorner" (
         active = true
+        customData = {
+            float3 rotationEulerHint = (0, 1.5707963, 0)
+        }
     )
     {
         float2 ui:nodegraph:node:pos = (20, 20)
         int ui:nodegraph:node:stackingOrder = 1
-        quatf xformOp:orient = (1, 0, 0, 0)
-        float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (-0.29265523, 1.4910487, 0)
+        quatf xformOp:orient = (0.70710677, 0, 0.70710677, 0)
+        float3 xformOp:scale = (1.1, 1.1, 1.1)
+        float3 xformOp:translate = (-3.0404117, 1.4609541, -0.44431895)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"
@@ -53,13 +59,35 @@ def "HiveScene" (
             string imageNames = "Hivestudy"
             uniform token info:id = "NYPCampus.PointOfInterestComponent"
             token location = "Hive"
-            string name = "poi_studyCorner"
+            string name = "Study Corner"
             string videoName = "null"
         }
 
         def RealityKitComponent "AmbientAudio"
         {
             uniform token info:id = "RealityKit.AmbientAudio"
+        }
+    }
+
+    def Xform "poi_Lounges" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (0, -0.69813174, 0)
+        }
+    )
+    {
+        quatf xformOp:orient = (0.9396926, 0, -0.34202012, 0)
+        float3 xformOp:scale = (1.1, 1.1, 1.1)
+        float3 xformOp:translate = (2.3329768, 1.3498327, -1.7387168)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"
+        {
+            string description = "Several couches curved inwards. Students can relax, chat, and do work via tables."
+            string id = "loungesInfo"
+            uniform token info:id = "NYPCampus.PointOfInterestComponent"
+            token location = "Hive"
+            string name = "Lounges"
         }
     }
 }

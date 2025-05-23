@@ -8,6 +8,7 @@ The app's main entry point.
 import SwiftUI
 import NYPCampus
 
+@available(visionOS 2.0, *)
 @main
 struct EntryPoint: App {
     @State private var appModel = AppModel()
@@ -39,6 +40,9 @@ struct EntryPoint: App {
             
         }
         .defaultSize(width: 820, height: 900)
+        .defaultWindowPlacement{root, context in
+            WindowPlacement(.utilityPanel)
+        }
         
         // Defines an immersive space as a part of the scene.
         ImmersiveSpace(id: appModel.immersiveSpaceID) {

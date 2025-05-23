@@ -73,7 +73,7 @@ public struct LearnMoreView: View {
                             
                             VStack{
                                 if let url = videoURL {
-                                    
+                                    /*
                                     VideoPlayer(player: player)
                                         .frame(
                                             alignment: .center)
@@ -84,8 +84,10 @@ public struct LearnMoreView: View {
                                             player?.actionAtItemEnd = .none
                                         }
                                         .scaledToFit()
+                                     */
+                                     
                                     HStack{
-                                        Button("New Window"){
+                                        Button("Click me for a better view."){
                                             print("Opening window for video:", videoName ?? "nil")
                                             if appModel.selectedvideoName == nil {
                                                 appModel.selectedvideoName = videoName
@@ -95,6 +97,7 @@ public struct LearnMoreView: View {
                                             //isShowingVideoOverlay = true
                                         }.padding(10)
                                         
+                                        /*
                                         Button(
                                             action:{
                                                 withAnimation{isExpanded.toggle()}
@@ -106,6 +109,7 @@ public struct LearnMoreView: View {
                                                 .clipShape(Circle())
                                         }
                                         .padding(10)
+                                         */
                                     }
                                 }
                                 else if !imageNames.isEmpty {

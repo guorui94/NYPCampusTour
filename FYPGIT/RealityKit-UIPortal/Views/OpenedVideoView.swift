@@ -8,6 +8,7 @@ struct OpenedVideoView: View{
     
     @State private var player: AVPlayer? // Video playing
     
+    @Environment(AppModel.self) var appModel
     @Environment(\.dismissWindow) private var closeWindow
     @State private var dragOffset: CGSize = .zero
     @GestureState private var gestureOffset: CGSize = .zero

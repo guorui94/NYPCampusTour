@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,6 +20,8 @@
 		D77367CB2CFFC7F4008A4DEF /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77367CA2CFFC7F1008A4DEF /* AppModel.swift */; };
 		DD1DBA002DB107BF00048E24 /* OpenedVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1DB9FF2DB107BF00048E24 /* OpenedVideoView.swift */; };
 		DDAACFAA2D9FADCE00DB922D /* Hummingbirds.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = DDAACFA92D9FADCE00DB922D /* Hummingbirds.mp4 */; };
+		DDE30E332DDEDB07005ADC3E /* NYPCampus in Frameworks */ = {isa = PBXBuildFile; productRef = DDE30E322DDEDB07005ADC3E /* NYPCampus */; };
+		DDE30E352DDEDB1C005ADC3E /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE30E342DDEDB1C005ADC3E /* Components.swift */; };
 		F5B0C9D72CA6072F00F43208 /* EntryPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B0C9D62CA6072F00F43208 /* EntryPoint.swift */; };
 		F5B0C9D92CA6072F00F43208 /* UIPortalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B0C9D82CA6072F00F43208 /* UIPortalView.swift */; };
 		F5B0C9E12CA6073000F43208 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5B0C9E02CA6073000F43208 /* Assets.xcassets */; };
@@ -43,6 +45,8 @@
 		D77367CA2CFFC7F1008A4DEF /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		DD1DB9FF2DB107BF00048E24 /* OpenedVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenedVideoView.swift; sourceTree = "<group>"; };
 		DDAACFA92D9FADCE00DB922D /* Hummingbirds.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Hummingbirds.mp4; sourceTree = "<group>"; };
+		DDE30E2F2DDEDAFB005ADC3E /* NYPCampus */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NYPCampus; sourceTree = "<group>"; };
+		DDE30E342DDEDB1C005ADC3E /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		E6E79D11A9F18B24CB7B3ACA /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = ../Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		F5B0C9CF2CA6072F00F43208 /* RealityKit-UIPortal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RealityKit-UIPortal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5B0C9D62CA6072F00F43208 /* EntryPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryPoint.swift; sourceTree = "<group>"; };
@@ -58,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDE30E332DDEDB07005ADC3E /* NYPCampus in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +84,14 @@
 			);
 			name = LICENSE;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		DDE30E302DDEDAFB005ADC3E /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				DDE30E2F2DDEDAFB005ADC3E /* NYPCampus */,
+			);
+			path = Packages;
 			sourceTree = "<group>";
 		};
 		F5B0C9C62CA6072F00F43208 = {
@@ -103,6 +116,7 @@
 		F5B0CA142CA611B600F43208 /* RealityKit-UIPortal */ = {
 			isa = PBXGroup;
 			children = (
+				DDE30E302DDEDAFB005ADC3E /* Packages */,
 				F5B0CA502CA611F700F43208 /* Views */,
 				F5B0CA522CA6122300F43208 /* Resources */,
 				F5B0CA4F2CA611DE00F43208 /* App */,
@@ -126,6 +140,7 @@
 		F5B0CA502CA611F700F43208 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DDE30E342DDEDB1C005ADC3E /* Components.swift */,
 				37C57B1F2D424B6E007D73C8 /* AttachmentsProvider.swift */,
 				DD1DB9FF2DB107BF00048E24 /* OpenedVideoView.swift */,
 				37C57B172D42034A007D73C8 /* LearnMoreView.swift */,
@@ -195,6 +210,9 @@
 				Base,
 			);
 			mainGroup = F5B0C9C62CA6072F00F43208;
+			packageReferences = (
+				DDE30E312DDEDB07005ADC3E /* XCLocalSwiftPackageReference "../../../../../Desktop/NYPCampusTour-main/FYPGIT/Packages/NYPCampus" */,
+			);
 			productRefGroup = F5B0C9D02CA6072F00F43208 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -227,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37C57B182D42034A007D73C8 /* LearnMoreView.swift in Sources */,
+				DDE30E352DDEDB1C005ADC3E /* Components.swift in Sources */,
 				F5B0C9D92CA6072F00F43208 /* UIPortalView.swift in Sources */,
 				D77367CB2CFFC7F4008A4DEF /* AppModel.swift in Sources */,
 				3726D9602D1E77BC0038D0B1 /* ContentView.swift in Sources */,
@@ -448,6 +467,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		DDE30E312DDEDB07005ADC3E /* XCLocalSwiftPackageReference "../../../../../Desktop/NYPCampusTour-main/FYPGIT/Packages/NYPCampus" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../../../../Desktop/NYPCampusTour-main/FYPGIT/Packages/NYPCampus";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DDE30E322DDEDB07005ADC3E /* NYPCampus */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NYPCampus;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F5B0C9C72CA6072F00F43208 /* Project object */;
 }

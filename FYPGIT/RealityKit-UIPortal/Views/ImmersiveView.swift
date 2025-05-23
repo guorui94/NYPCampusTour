@@ -42,6 +42,7 @@ struct ImmersiveView: View {
                 // root.position.z -= 1.0
                 
                 // Load the environment using the selected model name.
+                attachmentsProvider.attachments.removeAll()
                 try await createEnvironment(on: root, modelName: appModel.selectedModelName)
                 content.add(root)
                 
@@ -159,7 +160,13 @@ struct ImmersiveView: View {
 func createEnvironment(on root: Entity, modelName: String) async throws {
     // Load the environment root entity asynchronously.
     //let assetRoot = try await Entity(named: modelName)
-    let assetRoot = try await Entity(named: "FypLabScene", in: NYPCampus.nYPCampusBundle)
+    root.removeFromParent()
+    root.children.removeAll()
+    
+    
+    let assetRoot = try await Entity(named: modelName, in: NYPCampus.nYPCampusBundle)
+    print("AssetRoot: \(assetRoot)")
+    
 
     // Add the environment to the root entity.
     root.addChild(assetRoot)

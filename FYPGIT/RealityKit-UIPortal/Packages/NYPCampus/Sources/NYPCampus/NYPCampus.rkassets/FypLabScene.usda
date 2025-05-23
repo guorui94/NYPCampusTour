@@ -14,13 +14,12 @@ def Xform "FypLabScene"
     def Xform "poi_Bicycle" (
         active = true
         customData = {
-            float3 rotationEulerHint = (0, 0.8726645, 0)
+            float3 rotationEulerHint = (0, 0.52359885, 0)
         }
     )
     {
-        quatf xformOp:orient = (0.9063078, 0, 0.4226182, 0)
-        float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (-1.1154797, 0.512969, -0.232369)
+        quatf xformOp:orient = (0.9659258, 0, 0.25881904, 0)
+        float3 xformOp:translate = (-1.3317096, 1.0573989, -0.60288656)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"
@@ -36,14 +35,9 @@ def Xform "FypLabScene"
 
     def Xform "poi_TV" (
         active = true
-        customData = {
-            float3 rotationEulerHint = (0, 0.8726645, 0)
-        }
     )
     {
-        quatf xformOp:orient = (0.9063078, 0, 0.4226182, 0)
-        float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (-0.34002548, 0.7898291, -1.6120393)
+        float3 xformOp:translate = (0.446425, 1.4546762, -1.3808918)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"
@@ -60,12 +54,12 @@ def Xform "FypLabScene"
     def Xform "poi_Robot" (
         active = true
         customData = {
-            float3 rotationEulerHint = (0, -0.8726645, 0)
+            float3 rotationEulerHint = (0, -1.5707963, 0)
         }
     )
     {
-        quatf xformOp:orient = (0.9063078, 0, -0.4226182, 0)
-        float3 xformOp:translate = (1.8050865, 0.78237695, -0.9841166)
+        quatf xformOp:orient = (0.70710677, 0, -0.70710677, 0)
+        float3 xformOp:translate = (1.157598, 0.98860157, 0.31781942)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"
@@ -85,10 +79,8 @@ def Xform "FypLabScene"
         references = @Resources/FypLabScene.usdz@
     )
     {
-        rel material:binding = </FypLabScene/FypLabScene/FypLab/Materials/main> (
-            bindMaterialAs = "weakerThanDescendants"
-        )
-        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:scale = (0.01, 0.01, 0.01)
+        float3 xformOp:translate = (1.5681573, 0, -0.9054742)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         over "FypLab"
