@@ -97,6 +97,12 @@ struct ImmersiveView: View {
 //            }
             
         }
+        .gesture(TapGesture().targetedToAnyEntity()
+            .onEnded({ value in
+                // Apply the tap behavior on the entity
+                _ = value.entity.applyTapForBehaviors()
+            })
+        )
     }
     
     private func createLearnMoreView(for entity: Entity) {

@@ -10,7 +10,7 @@
 
 def Xform "FypLabScene"
 {
-    reorder nameChildren = ["poi_Bicycle", "poi_TV", "poi_Robot", "FypLabScene"]
+    reorder nameChildren = ["poi_Bicycle", "poi_TV", "poi_Robot", "FypLabScene", "MoveToBicycle", "MoveToTV", "MoveToRobot"]
     def Xform "poi_Bicycle" (
         active = true
         customData = {
@@ -19,6 +19,7 @@ def Xform "FypLabScene"
     )
     {
         quatf xformOp:orient = (0.9659258, 0, 0.25881904, 0)
+        float3 xformOp:scale = (1, 1, 1)
         float3 xformOp:translate = (-1.3317096, 1.0573989, -0.60288656)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
@@ -30,6 +31,36 @@ def Xform "FypLabScene"
             uniform token info:id = "NYPCampus.PointOfInterestComponent"
             string name = "Safe Riding Bike"
             string videoName = "null"
+        }
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            rel behaviors = </FypLabScene/poi_Bicycle/OnTap>
+            uniform token info:id = "RCP.BehaviorsContainer"
+        }
+
+        def Preliminary_Behavior "OnTap"
+        {
+            rel actions = </FypLabScene/poi_Bicycle/OnTap/Action>
+            uniform bool exclusive
+            rel triggers = </FypLabScene/poi_Bicycle/OnTap/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </FypLabScene/poi_Bicycle>
+                token info:id = "TapGesture"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </FypLabScene>
+                rel animationLibraryKey = </FypLabScene/MoveToBicycle>
+                rel animationLibraryKeyOverrideKey = </FypLabScene/poi_Bicycle/OnTap/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
         }
     }
 
@@ -48,6 +79,36 @@ def Xform "FypLabScene"
             uniform token info:id = "NYPCampus.PointOfInterestComponent"
             string name = "Immersive Technology Project"
             string videoName = "Hummingbirds"
+        }
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            rel behaviors = </FypLabScene/poi_TV/OnTap>
+            uniform token info:id = "RCP.BehaviorsContainer"
+        }
+
+        def Preliminary_Behavior "OnTap"
+        {
+            rel actions = </FypLabScene/poi_TV/OnTap/Action>
+            uniform bool exclusive
+            rel triggers = </FypLabScene/poi_TV/OnTap/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </FypLabScene/poi_TV>
+                token info:id = "TapGesture"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </FypLabScene>
+                rel animationLibraryKey = </FypLabScene/MoveToTV>
+                rel animationLibraryKeyOverrideKey = </FypLabScene/poi_TV/OnTap/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
         }
     }
 
@@ -71,6 +132,36 @@ def Xform "FypLabScene"
             string name = "Intelligent Guided Tour Robot"
             string videoName = "null"
         }
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            rel behaviors = </FypLabScene/poi_Robot/OnTap>
+            uniform token info:id = "RCP.BehaviorsContainer"
+        }
+
+        def Preliminary_Behavior "OnTap"
+        {
+            rel actions = </FypLabScene/poi_Robot/OnTap/Action>
+            uniform bool exclusive
+            rel triggers = </FypLabScene/poi_Robot/OnTap/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </FypLabScene/poi_Robot>
+                token info:id = "TapGesture"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </FypLabScene>
+                rel animationLibraryKey = </FypLabScene/MoveToRobot>
+                rel animationLibraryKeyOverrideKey = </FypLabScene/poi_Robot/OnTap/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
+        }
     }
 
     def "FypLabScene" (
@@ -91,6 +182,120 @@ def Xform "FypLabScene"
                 {
                     token outputs:mtlx:surface
                     token outputs:realitykit:vertex
+                }
+            }
+        }
+    }
+
+    def "cartoon_figure" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (0, -2.1816616, 2.3841858e-7)
+        }
+        references = @Resources/cartoon_figure.usdz@
+    )
+    {
+        quatf xformOp:orient = (-0.46174863, -1.0573994e-7, 0.8870108, -5.5044726e-8)
+        float3 xformOp:scale = (0.01, 0.01, 0.01)
+        float3 xformOp:translate = (1.0737138, 0.03964902, 1.7623343)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def RealityKitComponent "AudioMixGroups"
+    {
+        uniform token info:id = "RealityKit.AudioMixGroups"
+
+        def RealityKitAudioMixGroup "MixGroup"
+        {
+            float gain = 0
+            bool mute = 0
+            float speed = 1
+        }
+    }
+
+    def RealityKitTimeline "MoveToBicycle"
+    {
+        reorder nameChildren = ["Track", "Track2"]
+        def RealityKitTrack "Track2"
+        {
+            def RealityKitAction "Transform_To"
+            {
+                string actionKind = "moveTo"
+                int blendLayer = 300
+                double duration = 4.011238383390305
+                uniform token info:id = "9CC3168D-0BC8-468E-A33E-BCA26E7E6647"
+                float3 position = (-1.83, 0.03965, -1)
+                quatf rotation = (0.9396926, 1.2727358e-7, 0.34202012, 1.5222668e-8)
+                float3 scale = (0.01, 0.01, 0.01)
+                double startTime = 0
+                rel target = </FypLabScene/cartoon_figure>
+
+                def RealityKitStruct "transformMode"
+                {
+                    rel referenceEntity = </FypLabScene>
+                    token type = "parent"
+                }
+
+                def RealityKitStruct "timingFunction"
+                {
+                }
+            }
+        }
+    }
+
+    def RealityKitTimeline "MoveToTV"
+    {
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Transform_To"
+            {
+                string actionKind = "moveTo"
+                int blendLayer = 300
+                double duration = 4.006321729811947
+                uniform token info:id = "14D0F963-F025-4636-A1C1-F9B9D91AE7BE"
+                float3 position = (-0.2, 0.03964902, -1)
+                quatf rotation = (1, 1.6292068e-7, -4.3711374e-8, 7.549791e-8)
+                float3 scale = (0.01, 0.01, 0.01)
+                double startTime = 0
+                rel target = </FypLabScene/cartoon_figure>
+
+                def RealityKitStruct "transformMode"
+                {
+                    rel referenceEntity = </FypLabScene>
+                    token type = "parent"
+                }
+
+                def RealityKitStruct "timingFunction"
+                {
+                }
+            }
+        }
+    }
+
+    def RealityKitTimeline "MoveToRobot"
+    {
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Transform_To"
+            {
+                string actionKind = "moveTo"
+                int blendLayer = 300
+                double duration = 4.008784741426991
+                uniform token info:id = "9AE3C041-AA2F-4740-BBD6-6D781D1E818B"
+                float3 position = (1.2, 0.03964902, 1)
+                quatf rotation = (0.70710677, 0, -0.70710677, 0)
+                float3 scale = (0.01, 0.01, 0.01)
+                double startTime = 0
+                rel target = </FypLabScene/cartoon_figure>
+
+                def RealityKitStruct "transformMode"
+                {
+                    rel referenceEntity = </FypLabScene>
+                    token type = "parent"
+                }
+
+                def RealityKitStruct "timingFunction"
+                {
                 }
             }
         }
