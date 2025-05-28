@@ -304,6 +304,7 @@ def Xform "FypLabScene"
     }
 
     def Capsule "infoCapsule" (
+        active = false
         prepend apiSchemas = ["MaterialBindingAPI"]
         customData = {
             float3 rotationEulerHint = (1.5707966, -0.34906587, -1.7443233e-7)
