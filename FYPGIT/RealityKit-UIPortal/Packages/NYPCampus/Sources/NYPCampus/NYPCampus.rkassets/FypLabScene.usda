@@ -10,7 +10,7 @@
 
 def Xform "FypLabScene"
 {
-    reorder nameChildren = ["poi_Bicycle", "poi_TV", "poi_Robot", "FypLabScene", "cartoon_figure", "AudioMixGroups", "MoveToBicycle", "MoveToTV", "MoveToRobot", "infoCapsule", "Spin"]
+    reorder nameChildren = ["poi_Bicycle", "poi_TV", "poi_Robot", "FypLabScene", "cartoon_figure", "AudioMixGroups", "MoveToBicycle", "MoveToTV", "MoveToRobot", "infoCapsule", "FypLabAudio"]
     def Xform "poi_Bicycle" (
         active = true
         prepend apiSchemas = ["MaterialBindingAPI"]
@@ -185,6 +185,47 @@ def Xform "FypLabScene"
                     token outputs:mtlx:surface
                     token outputs:realitykit:vertex
                 }
+            }
+        }
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            rel behaviors = </FypLabScene/FypLabScene/OnAddedToScene>
+            uniform token info:id = "RCP.BehaviorsContainer"
+        }
+
+        def Preliminary_Behavior "OnAddedToScene"
+        {
+            rel actions = </FypLabScene/FypLabScene/OnAddedToScene/Action>
+            uniform bool exclusive
+            rel triggers = </FypLabScene/FypLabScene/OnAddedToScene/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </FypLabScene/FypLabScene>
+                token info:id = "SceneTransition"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </FypLabScene>
+                rel animationLibraryKey = </FypLabScene/FypLabAudio>
+                rel animationLibraryKeyOverrideKey = </FypLabScene/FypLabScene/OnAddedToScene/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
+        }
+
+        def RealityKitComponent "AudioLibrary"
+        {
+            uniform token info:id = "RealityKit.AudioLibrary"
+
+            def RealityKitDict "resources"
+            {
+                string[] keys = ["Studying.wav"]
+                rel values = </FypLabScene/Studying_wav>
             }
         }
     }
@@ -364,24 +405,32 @@ def Xform "FypLabScene"
         }
     }
 
-    def RealityKitTimeline "Spin"
+    def RealityKitTimeline "FypLabAudio"
     {
         def RealityKitTrack "Track"
         {
-            def RealityKitAction "Spin"
+            def RealityKitAction "Play_Audio"
             {
-                string actionKind = "spin"
-                int blendLayer = 400
-                double duration = 1
-                uniform token info:id = "18A90A82-C1B2-473F-B8FB-89F4B752D483"
-                double startTime = 0.0051769578313253005
-                rel target = </FypLabScene/cartoon_figure>
+                string actionKind = "audio"
+                string audioResourceName = "Studying.wav"
+                bool controlPlayback = 1
+                double duration = 116.84210416666667
+                uniform token info:id = "E1C21264-12D5-40B4-8B81-B7C2D908D45D"
+                double loopCount = 0
+                double startTime = 0
+                rel target = </FypLabScene/FypLabScene>
 
-                def RealityKitStruct "timingFunction"
+                def RealityKitStruct "handoffType"
                 {
                 }
             }
         }
+    }
+
+    def RealityKitAudioFile "Studying_wav"
+    {
+        uniform asset file = @Resources/Studying.wav@
+        uniform bool shouldLoop = 1
     }
 }
 

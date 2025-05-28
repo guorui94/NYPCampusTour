@@ -50,7 +50,7 @@ struct ImmersiveView: View {
                     createLearnMoreView(for: event.entity)
                 }))
                 
-                playSound(for: appModel.selectedModelName)
+                //playSound(for: appModel.selectedModelName)
             
                 
             } catch {
@@ -124,8 +124,11 @@ struct ImmersiveView: View {
                                  videoName: pointOfInterest.videoName,
                                  onTap: {
                                     print("Outer view handling inner view tap, \(String(localized: name)) was tapped")
-                                    entity.applyTapForBehaviors()
-                                }
+            if #available(visionOS 2.0, *) {
+                entity.applyTapForBehaviors()
+            } else {
+                // Fallback on earlier versions
+            }                                }
         ).tag(tag)
 
         

@@ -8,7 +8,7 @@ def "HiveScene" (
     references = @Resources/HiveScene.usdz@
 )
 {
-    reorder nameChildren = ["Hive", "poi_Hive", "poi_StudyCorner", "poi_Lounges"]
+    reorder nameChildren = ["Hive", "poi_Hive", "poi_StudyCorner", "poi_Lounges", "HiveAudio"]
     float3 xformOp:scale = (100, 100, 100)
     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
@@ -62,11 +62,6 @@ def "HiveScene" (
             string name = "Study Corner"
             string videoName = "null"
         }
-
-        def RealityKitComponent "AmbientAudio"
-        {
-            uniform token info:id = "RealityKit.AmbientAudio"
-        }
     }
 
     def Xform "poi_Lounges" (
@@ -89,6 +84,78 @@ def "HiveScene" (
             token location = "Hive"
             string name = "Lounges"
         }
+    }
+
+    def RealityKitTimeline "HiveAudio"
+    {
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Play_Audio"
+            {
+                string actionKind = "audio"
+                string audioResourceName = "Lofi_Rain.wav"
+                bool controlPlayback = 1
+                double duration = 118.4
+                uniform token info:id = "800C71F7-02C4-4437-AD6C-2338585C4E57"
+                double loopCount = 0
+                double startTime = 0
+                rel target = </HiveScene/Hive>
+
+                def RealityKitStruct "handoffType"
+                {
+                }
+            }
+        }
+    }
+
+    over "Hive"
+    {
+        def RealityKitComponent "AudioLibrary"
+        {
+            uniform token info:id = "RealityKit.AudioLibrary"
+
+            def RealityKitDict "resources"
+            {
+                string[] keys = ["Lofi_Rain.wav"]
+                rel values = </HiveScene/Lofi_Rain_wav>
+            }
+        }
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            rel behaviors = </HiveScene/Hive/OnAddedToScene>
+            uniform token info:id = "RCP.BehaviorsContainer"
+        }
+
+        def Preliminary_Behavior "OnAddedToScene"
+        {
+            rel actions = </HiveScene/Hive/OnAddedToScene/Action>
+            uniform bool exclusive
+            rel triggers = </HiveScene/Hive/OnAddedToScene/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </HiveScene/Hive>
+                token info:id = "SceneTransition"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </HiveScene>
+                rel animationLibraryKey = </HiveScene/HiveAudio>
+                rel animationLibraryKeyOverrideKey = </HiveScene/Hive/OnAddedToScene/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
+        }
+    }
+
+    def RealityKitAudioFile "Lofi_Rain_wav"
+    {
+        uniform asset file = @Resources/Lofi_Rain.wav@
+        uniform bool shouldLoop = 1
     }
 }
 

@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "NYPCampus",
     platforms: [
-        .visionOS(.v1),
+        .visionOS(.v2),
         .macOS(.v15),
         .iOS(.v18)
     ],
