@@ -3,10 +3,7 @@
     "objectMetadataList" : [
       [
         "1E51CBC1-1F18-4E37-A9C7-BDEBB2A2C0E8",
-        "FYPImmersiveLab",
-        "FypLabScene",
-        "FypLab",
-        "FypLab"
+        "FYPImmersiveLab"
       ],
       {
         "isExpanded" : true,
@@ -14,7 +11,10 @@
       },
       [
         "1E51CBC1-1F18-4E37-A9C7-BDEBB2A2C0E8",
-        "FYPImmersiveLab"
+        "FYPImmersiveLab",
+        "FypLabScene",
+        "FypLab",
+        "FypLab"
       ],
       {
         "isExpanded" : true,
@@ -62,7 +62,93 @@
     "objectMetadataList" : [
       [
         "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "MoveToTV",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "MoveToRobot",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "MoveToBicycle"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
         "FypLabScene"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "cartoon_figure"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "MoveToBicycle",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "MoveToRobot"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "Timeline",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "Timeline",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "MoveToTV"
       ],
       {
         "isExpanded" : true,
