@@ -13,6 +13,7 @@ def Xform "FypLabScene"
     reorder nameChildren = ["poi_Bicycle", "poi_TV", "poi_Robot", "FypLabScene", "MoveToBicycle", "MoveToTV", "MoveToRobot"]
     def Xform "poi_Bicycle" (
         active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
         customData = {
             float3 rotationEulerHint = (0, 0.52359885, 0)
         }
@@ -224,8 +225,8 @@ def Xform "FypLabScene"
                 int blendLayer = 300
                 double duration = 4.011238383390305
                 uniform token info:id = "9CC3168D-0BC8-468E-A33E-BCA26E7E6647"
-                float3 position = (-1.83, 0.03965, -1)
-                quatf rotation = (0.9396926, 1.2727358e-7, 0.34202012, 1.5222668e-8)
+                float3 position = (-1.83, 0.03965, -0.08031738)
+                quatf rotation = (0.8660254, 1.0334449e-7, 0.5, -1.6077259e-8)
                 float3 scale = (0.01, 0.01, 0.01)
                 double startTime = 0
                 rel target = </FypLabScene/cartoon_figure>

@@ -26,7 +26,7 @@ struct ImmersiveView: View {
     // The average human height in meters.
     let avgHeight: Float = 0
     let root = Entity()
-
+    
     var body: some View {
         
         RealityView { content, attachments in
@@ -51,6 +51,7 @@ struct ImmersiveView: View {
                 }))
                 
                 playSound(for: appModel.selectedModelName)
+            
                 
             } catch {
                 print("Failed to load environment: \(error.localizedDescription)")
@@ -97,12 +98,13 @@ struct ImmersiveView: View {
 //            }
             
         }
-        .gesture(TapGesture().targetedToAnyEntity()
-            .onEnded({ value in
-                // Apply the tap behavior on the entity
-                _ = value.entity.applyTapForBehaviors()
-            })
-        )
+//        .gesture(TapGesture().targetedToAnyEntity()
+//            .onEnded({ value in
+//                _ = value.entity.applyTapForBehaviors()
+//                print(value.entity)
+//            })
+//        )
+
     }
     
     private func createLearnMoreView(for entity: Entity) {
@@ -119,8 +121,13 @@ struct ImmersiveView: View {
         let view = LearnMoreView(name: String(localized: name),
                                  description: String(localized: description),
                                  imageNames: pointOfInterest.imageNameArray,
-                                 videoName: pointOfInterest.videoName
+                                 videoName: pointOfInterest.videoName,
+                                 onTap: {
+                                    print("Outer view handling inner view tap, \(String(localized: name)) was tapped")
+                                    entity.applyTapForBehaviors()
+                                }
         ).tag(tag)
+
         
 //        let view = LearnMoreView(name: String(localized: name),
 //                                 description: String(localized: description),
@@ -134,6 +141,7 @@ struct ImmersiveView: View {
         attachmentsProvider.attachments[tag] = AnyView(view)
         
     }
+    
     
     @MainActor
     func playSound(for scene: String) {
@@ -169,10 +177,8 @@ func createEnvironment(on root: Entity, modelName: String) async throws {
     root.removeFromParent()
     root.children.removeAll()
     
-    
     let assetRoot = try await Entity(named: modelName, in: NYPCampus.nYPCampusBundle)
     print("AssetRoot: \(assetRoot)")
-    
 
     // Add the environment to the root entity.
     root.addChild(assetRoot)

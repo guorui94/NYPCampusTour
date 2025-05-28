@@ -11,6 +11,7 @@ public struct LearnMoreView: View {
     
     let videoName: String? //For video access
     
+    let onTap: () -> Void
 
     @State private var showingMoreInfo = false
     @Namespace private var animation
@@ -143,6 +144,9 @@ public struct LearnMoreView: View {
                 .onTapGesture {
                     withAnimation(.spring) {
                         showingMoreInfo.toggle()
+                        if showingMoreInfo {
+                            onTap()
+                        }
                     }
                 }
                 .hoverEffect(
@@ -211,7 +215,9 @@ struct ImagesView: View {
                 //position: SIMD3<Float>(1.0, 1.5, 0.0),
                 //rotation: simd_quatf(angle: .pi / 4, axis: SIMD3<Float>(0, 1, 0)),
                 imageNames: ["Bicycle"],
-                videoName: "Hummingbirds"
+                videoName: "Hummingbirds",
+                onTap: { print("Tapped!")
+                }
             )
         }
     }
