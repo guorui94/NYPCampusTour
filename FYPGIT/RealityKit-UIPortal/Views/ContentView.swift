@@ -69,7 +69,7 @@ struct ContentView: View {
                     .environment(appModel)
                     .id(selectedArea.id) // Add a unique ID to force refresh
             } else {
-                Text("Welcome to the NYP campus app.")
+                Text("Welcome to the NYP Campus App.")
                     .bold()
                     .padding(.bottom, 10)
                 Text("Select an area in the dropdown menu to begin your journey.")

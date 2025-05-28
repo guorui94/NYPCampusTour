@@ -51,7 +51,7 @@ struct ImmersiveView: View {
                 }))
                 
                 playSound(for: appModel.selectedModelName)
-                
+                       
             } catch {
                 print("Failed to load environment: \(error.localizedDescription)")
             }
@@ -100,7 +100,11 @@ struct ImmersiveView: View {
         .gesture(TapGesture().targetedToAnyEntity()
             .onEnded({ value in
                 // Apply the tap behavior on the entity
-                _ = value.entity.applyTapForBehaviors()
+                if #available(visionOS 2.0, *) {
+                    _ = value.entity.applyTapForBehaviors()
+                } else {
+                    // Fallback on earlier versions
+                }
             })
         )
     }
@@ -188,6 +192,7 @@ struct AttachmentInfo {
     let imageNames: [String]
     let videoName: String?
 }
+
 
 
 //Retrieves the attachment configurations for each environment.

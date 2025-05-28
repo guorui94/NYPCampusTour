@@ -22,8 +22,8 @@ def "HiveScene" (
         float2 ui:nodegraph:node:pos = (20, 20)
         int ui:nodegraph:node:stackingOrder = 1
         quatf xformOp:orient = (0.087155804, 0, 0.9961947, 0)
-        float3 xformOp:scale = (1.1, 1.1, 1.1)
-        float3 xformOp:translate = (-0.32952702, 1.4280014, 1.3433106)
+        float3 xformOp:scale = (1.5, 1.5, 1.5)
+        float3 xformOp:translate = (-0.17599802, 1.4279845, 1.069991)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"
@@ -48,8 +48,8 @@ def "HiveScene" (
         float2 ui:nodegraph:node:pos = (20, 20)
         int ui:nodegraph:node:stackingOrder = 1
         quatf xformOp:orient = (0.70710677, 0, 0.70710677, 0)
-        float3 xformOp:scale = (1.1, 1.1, 1.1)
-        float3 xformOp:translate = (-3.0404117, 1.4609541, -0.44431895)
+        float3 xformOp:scale = (1.5, 1.5, 1.5)
+        float3 xformOp:translate = (-3.3861895, 1.1621033, -0.44431737)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"
@@ -77,8 +77,8 @@ def "HiveScene" (
     )
     {
         quatf xformOp:orient = (0.9396926, 0, -0.34202012, 0)
-        float3 xformOp:scale = (1.1, 1.1, 1.1)
-        float3 xformOp:translate = (2.3329768, 1.3498327, -1.7387168)
+        float3 xformOp:scale = (1.5, 1.5, 1.5)
+        float3 xformOp:translate = (2.4690204, 1.1450856, -1.6245605)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"

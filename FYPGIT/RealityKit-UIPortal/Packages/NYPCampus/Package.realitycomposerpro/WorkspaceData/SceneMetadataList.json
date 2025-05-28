@@ -62,7 +62,64 @@
     "objectMetadataList" : [
       [
         "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "MoveToTV",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "MoveToBicycle",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "Spin",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "MoveToTV"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "Spin"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
         "FypLabScene"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "A5C71ECA-CC3A-478E-A200-5D70EF6B33C4",
+        "FypLabScene",
+        "MoveToBicycle"
       ],
       {
         "isExpanded" : true,
