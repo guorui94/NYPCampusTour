@@ -42,7 +42,7 @@ struct EntryPoint: App {
         .defaultSize(width: 820, height: 900)
         .defaultWindowPlacement{root, context in
             WindowPlacement(.utilityPanel)
-        }
+        } // Modification for Center display
         
         // Defines an immersive space as a part of the scene.
         ImmersiveSpace(id: appModel.immersiveSpaceID) {

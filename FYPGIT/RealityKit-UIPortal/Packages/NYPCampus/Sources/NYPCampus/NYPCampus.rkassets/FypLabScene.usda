@@ -10,7 +10,7 @@
 
 def Xform "FypLabScene"
 {
-    reorder nameChildren = ["poi_Bicycle", "poi_TV", "poi_Robot", "FypLabScene", "MoveToBicycle", "MoveToTV", "MoveToRobot"]
+    reorder nameChildren = ["poi_Bicycle", "poi_TV", "poi_Robot", "FypLabScene", "cartoon_figure", "AudioMixGroups", "MoveToBicycle", "MoveToTV", "MoveToRobot", "infoCapsule", "Spin"]
     def Xform "poi_Bicycle" (
         active = true
         prepend apiSchemas = ["MaterialBindingAPI"]
@@ -21,7 +21,7 @@ def Xform "FypLabScene"
     {
         quatf xformOp:orient = (0.9659258, 0, 0.25881904, 0)
         float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (-1.3317096, 1.0573989, -0.60288656)
+        float3 xformOp:translate = (-1.2073144, 0.8488544, -0.52464557)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"
@@ -69,7 +69,7 @@ def Xform "FypLabScene"
         active = true
     )
     {
-        float3 xformOp:translate = (0.446425, 1.4546762, -1.3808918)
+        float3 xformOp:translate = (0.446425, 1.2958367, -1.3808918)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"
@@ -121,7 +121,7 @@ def Xform "FypLabScene"
     )
     {
         quatf xformOp:orient = (0.70710677, 0, -0.70710677, 0)
-        float3 xformOp:translate = (1.157598, 0.98860157, 0.31781942)
+        float3 xformOp:translate = (1.1270127, 0.8155195, 0.40174043)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitCustomComponent "NYPCampus_PointOfInterestComponent"
@@ -171,6 +171,7 @@ def Xform "FypLabScene"
         references = @Resources/FypLabScene.usdz@
     )
     {
+        reorder nameChildren = ["Materials", "Meshes", "Cube"]
         float3 xformOp:scale = (0.01, 0.01, 0.01)
         float3 xformOp:translate = (1.5681573, 0, -0.9054742)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
@@ -189,13 +190,13 @@ def Xform "FypLabScene"
     }
 
     def "cartoon_figure" (
-        active = true
         customData = {
             float3 rotationEulerHint = (0, -2.1816616, 2.3841858e-7)
         }
         references = @Resources/cartoon_figure.usdz@
     )
     {
+        reorder nameChildren = ["Materials", "Meshes", "Cube"]
         quatf xformOp:orient = (-0.46174863, -1.0573994e-7, 0.8870108, -5.5044726e-8)
         float3 xformOp:scale = (0.01, 0.01, 0.01)
         float3 xformOp:translate = (1.0737138, 0.03964902, 1.7623343)
@@ -294,6 +295,86 @@ def Xform "FypLabScene"
                     rel referenceEntity = </FypLabScene>
                     token type = "parent"
                 }
+
+                def RealityKitStruct "timingFunction"
+                {
+                }
+            }
+        }
+    }
+
+    def Capsule "infoCapsule" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        customData = {
+            float3 rotationEulerHint = (1.5707966, -0.34906587, -1.7443233e-7)
+        }
+    )
+    {
+        uniform token axis = "Y"
+        double height = 0.2
+        rel material:binding = </FypLabScene/infoCapsule/DefaultMaterial>
+        double radius = 0.1
+        quatf xformOp:orient = (0.69636416, 0.69636434, -0.12278785, 0.12278776)
+        float3 xformOp:scale = (0.4, 2, 2)
+        float3 xformOp:translate = (1.1340734, 1.7041992, 1.4116361)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Material "DefaultMaterial"
+        {
+            token outputs:surface.connect = </FypLabScene/infoCapsule/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+            def Shader "DefaultSurfaceShader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1, 1, 1)
+                float inputs:roughness = 0.75
+                token outputs:surface
+            }
+        }
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            rel behaviors = </FypLabScene/infoCapsule/OnTap>
+            uniform token info:id = "RCP.BehaviorsContainer"
+        }
+
+        def Preliminary_Behavior "OnTap"
+        {
+            rel actions = </FypLabScene/infoCapsule/OnTap/Action>
+            uniform bool exclusive
+            rel triggers = </FypLabScene/infoCapsule/OnTap/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </FypLabScene/infoCapsule>
+                token info:id = "TapGesture"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </FypLabScene>
+                rel animationLibraryKey = </FypLabScene/Spin>
+                rel animationLibraryKeyOverrideKey = </FypLabScene/infoCapsule/OnTap/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
+        }
+    }
+
+    def RealityKitTimeline "Spin"
+    {
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Spin"
+            {
+                string actionKind = "spin"
+                int blendLayer = 400
+                double duration = 1
+                uniform token info:id = "18A90A82-C1B2-473F-B8FB-89F4B752D483"
+                double startTime = 0.0051769578313253005
+                rel target = </FypLabScene/cartoon_figure>
 
                 def RealityKitStruct "timingFunction"
                 {

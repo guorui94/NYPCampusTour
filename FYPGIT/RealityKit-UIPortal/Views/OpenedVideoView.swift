@@ -26,7 +26,7 @@ struct OpenedVideoView: View{
             Color.black.ignoresSafeArea()
             
             VStack(){
-                Text("Expanded video")
+                Text("Video showcase")
                     .font(.title2)
                     .bold()
                     .padding(.top, 10)

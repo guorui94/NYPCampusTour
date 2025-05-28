@@ -73,6 +73,24 @@ public struct LearnMoreView: View {
                             .animation(.easeInOut(duration: 0.2), value: isExpanded)
                             
                             VStack{
+                                
+                                if !imageNames.isEmpty {
+                                    Spacer()
+                                        .frame(height: 10)
+                                    
+                                    ImagesView(imageNames: imageNames, isExpanded: isExpanded )
+                                        .padding(.bottom, 10)
+                                    //Additional Add ons to expand
+                                        .onTapGesture {
+                                            withAnimation{
+                                            }
+                                        }
+                                        .frame(
+                                            alignment: .center
+                                        )
+                                        .clipped()
+                                }
+                                Spacer()
                                 if let url = videoURL {
                                     /*
                                     VideoPlayer(player: player)
@@ -88,7 +106,7 @@ public struct LearnMoreView: View {
                                      */
                                      
                                     HStack{
-                                        Button("Click me for a better view."){
+                                        Button("Click me for video viewing."){
                                             print("Opening window for video:", videoName ?? "nil")
                                             if appModel.selectedvideoName == nil {
                                                 appModel.selectedvideoName = videoName
@@ -97,6 +115,7 @@ public struct LearnMoreView: View {
                                                                                     
                                             //isShowingVideoOverlay = true
                                         }.padding(10)
+                                            .foregroundColor(.white)
                                         
                                         /*
                                         Button(
@@ -112,22 +131,6 @@ public struct LearnMoreView: View {
                                         .padding(10)
                                          */
                                     }
-                                }
-                                else if !imageNames.isEmpty {
-                                    Spacer()
-                                        .frame(height: 10)
-                                    
-                                    ImagesView(imageNames: imageNames, isExpanded: isExpanded )
-                                        .padding(.bottom, 10)
-                                    //Additional Add ons to expand
-                                        .onTapGesture {
-                                            withAnimation{
-                                            }
-                                        }
-                                        .frame(
-                                            alignment: .center
-                                        )
-                                        .clipped()
                                 }
                             }
                         }
